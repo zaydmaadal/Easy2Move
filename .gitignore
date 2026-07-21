@@ -29,3 +29,4 @@ sportfeed(Example)/
 # --- Claude Code tooling, geen projectcode ---
 .agents/
 skills-lock.json
+CLAUDE.md
