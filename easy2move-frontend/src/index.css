@@ -1,0 +1,2266 @@
+/* ============================================================
+   Easy2Move — design system
+   Zwart/wit met goud als accent (uit het logo).
+   Display: Archivo (variabele breedte-as, expanded voor koppen)
+   Body: Space Grotesk (karaktervolle, techy grotesk)
+   ============================================================ */
+
+:root {
+  --ink: #0b0b0c;
+  --paper: #ffffff;
+  --soft: #f5f5f4;
+  --line: #e7e5e4;
+  --muted: #6f6f6f;
+  --gold: #c8a028;
+  --gold-soft: #f5edd8;
+  --radius: 16px;
+  --font-display: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* clip i.p.v. hidden: knipt horizontale overflow af zonder een
+     scrollcontainer te maken (position: sticky blijft dus werken) */
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  min-height: 60vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.container {
+  width: min(1120px, 92%);
+  margin-inline: auto;
+}
+
+.container--narrow {
+  max-width: 760px;
+}
+
+/* Voor screenreaders en zoekmachines: aanwezig in de DOM, onzichtbaar */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------
+   Scroll-progressbalk (scroll stuurt de animatie aan)
+   ------------------------------------------------------------ */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--gold);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 60;
+}
+
+/* ------------------------------------------------------------
+   Header
+   ------------------------------------------------------------ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header--scrolled {
+  border-color: var(--line);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.05rem;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.header__nav a:not(.btn) {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  position: relative;
+  padding-block: 0.3rem;
+}
+
+.header__nav a:not(.btn)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header__nav a:not(.btn):hover::after,
+.header__nav a.active::after {
+  transform: scaleX(1);
+  transform-origin: 0 50%;
+}
+
+/* ------------------------------------------------------------
+   Logo — "2" groter en in goud, ladder in de O (lockup)
+   ------------------------------------------------------------ */
+.logo {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.logo__2 {
+  color: var(--gold);
+  font-size: 1.32em;
+  line-height: 1;
+  position: relative;
+  top: 0.05em;
+  margin-inline: 0.01em;
+}
+
+.logo--lockup {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: clamp(2.6rem, 9vw, 6.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.logo__o {
+  height: 0.72em;
+  width: 0.72em;
+  margin-inline: 0.025em;
+  transform: translateY(0.05em);
+}
+
+.lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.lockup__rule {
+  width: 150px;
+  height: 3px;
+  background: var(--gold);
+}
+
+.lockup__sub {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  font-size: clamp(0.62rem, 1.7vw, 0.95rem);
+  padding-left: 0.42em; /* compenseert letter-spacing voor optisch centreren */
+}
+
+/* ------------------------------------------------------------
+   Hero — met interactieve achtergrond (dots, vormen, parallax)
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  min-height: 86svh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-block: 4rem;
+  overflow: hidden;
+}
+
+/* Subtiel puntenraster met zachte uitvloei naar de randen */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #dedcd9 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 25%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, black 25%, transparent 78%);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Vormen: buitenste span positioneert, binnenste span krijgt de
+   parallax-transform van JS — zo botsen positie en transform nooit. */
+.hero__vorm {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero__blob {
+  position: absolute;
+  width: 560px;
+  height: 560px;
+  right: -160px;
+  top: -120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 160, 40, 0.2), transparent 65%);
+  filter: blur(48px);
+  animation: zweef 9s ease-in-out infinite alternate;
+}
+
+/* Gigantische outline-"2" gecentreerd achter het logo */
+.hero__vorm--twee {
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__twee {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: min(38vw, 480px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 2px #eceae7;
+  user-select: none;
+}
+
+.hero__vorm--dot {
+  left: 13%;
+  top: 24%;
+}
+
+.hero__dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.8;
+}
+
+.hero__vorm--ring {
+  right: 12%;
+  bottom: 18%;
+}
+
+.hero__ring {
+  display: block;
+  width: 110px;
+  height: 110px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.hero__kicker {
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+}
+
+.hero__lead {
+  max-width: 36rem;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.hero__lead mark {
+  background: linear-gradient(transparent 55%, var(--gold-soft) 55%);
+  color: inherit;
+  font-weight: 700;
+  padding-inline: 0.1em;
+}
+
+.hero__cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero__badges {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.badge {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+/* Entrance-animatie hero (gestaffeld) */
+.fade-item {
+  opacity: 0;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.fade-item--2 {
+  animation-delay: 0.18s;
+}
+
+.fade-item--3 {
+  animation-delay: 0.34s;
+}
+
+.fade-item--4 {
+  animation-delay: 0.5s;
+}
+
+.fade-item--5 {
+  animation-delay: 0.64s;
+}
+
+/* ------------------------------------------------------------
+   Marquee-band (snelheid/richting via JS, reageert op scroll)
+   ------------------------------------------------------------ */
+/* De zone klipt de gedraaide band, zodat die nooit horizontale
+   scroll veroorzaakt. De rotatie tilt de hoeken van de band boven
+   en onder haar eigen hoogte uit, dus de zone krijgt extra ruimte
+   (padding) mee zodat er niets wordt weggesneden. */
+.marquee-zone {
+  overflow: hidden;
+  padding-block: clamp(14px, 2.2vw, 30px);
+}
+
+.marquee {
+  overflow: hidden;
+  background: var(--ink);
+  color: #fff;
+  padding-block: 0.95rem;
+  transform: rotate(-1.2deg) scale(1.02);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee__row {
+  display: flex;
+  flex: none;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.marquee__star {
+  color: var(--gold);
+  margin-inline: 1.5rem;
+}
+
+/* ------------------------------------------------------------
+   Secties
+   ------------------------------------------------------------ */
+.section {
+  padding-block: 6.5rem;
+}
+
+.section--soft {
+  background: var(--soft);
+}
+
+.overline {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+}
+
+.overline::before {
+  content: '';
+  display: inline-block;
+  width: 26px;
+  height: 2px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin-right: 0.7rem;
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-stretch: 118%;
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-top: 0.5rem;
+}
+
+/* Stappen */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin-top: 3rem;
+}
+
+.step {
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem 1.8rem;
+  background: var(--paper);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
+}
+
+.step__nr {
+  display: block;
+  font-family: var(--font-display);
+  font-stretch: 118%;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #d6d3d1;
+  margin-bottom: 1.2rem;
+  transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+}
+
+.step:hover .step__nr {
+  color: var(--gold);
+  -webkit-text-stroke: 1.5px var(--gold);
+}
+
+.step h3 {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
+/* Tarieven (echte prijzen easy2move.be) */
+.tarieven {
+  margin-top: 2.6rem;
+  border-top: 1px solid var(--line);
+}
+
+.tarief {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.35rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.25s ease;
+}
+
+.tarief:hover {
+  background: var(--paper);
+}
+
+.tarief__naam {
+  font-weight: 700;
+}
+
+.tarief__prijs {
+  font-family: var(--font-display);
+  font-stretch: 115%;
+  font-weight: 900;
+  font-size: 1.7rem;
+}
+
+.tarief__prijs small {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-left: 0.15rem;
+}
+
+.tarief__half {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.tarieven__note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 1.4rem 0 2rem;
+  max-width: 40rem;
+}
+
+/* Troeven */
+.troeven {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+  margin-top: 3rem;
+}
+
+.troef {
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.6rem;
+  background: var(--paper);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.troef:hover {
+  transform: translateY(-6px);
+}
+
+.troef__icoon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--soft);
+  margin-bottom: 1.1rem;
+  transition: background 0.3s ease;
+}
+
+.troef:hover .troef__icoon {
+  background: var(--gold-soft);
+}
+
+.troef__icoon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.troef h3 {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+
+.troef p {
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+/* Praktische info */
+.info-kaarten {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin-top: 3rem;
+}
+
+.info-kaart {
+  height: 100%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.6rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.info-kaart:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
+  border-color: var(--gold);
+}
+
+.info-kaart h3 {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+}
+
+.info-kaart p {
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.info-link {
+  margin-top: 1.6rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.info-link a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* CTA-band */
+.cta {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding-block: 7rem;
+}
+
+.cta h2 {
+  font-family: var(--font-display);
+  font-stretch: 122%;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.cta__accent {
+  color: var(--gold);
+}
+
+.cta p {
+  color: rgba(255, 255, 255, 0.65);
+  margin: 1rem 0 2.2rem;
+}
+
+.cta__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.footer {
+  position: relative;
+  background: var(--ink);
+  color: #fff;
+  padding-bottom: 2.2rem;
+  overflow: hidden;
+}
+
+.footer__mark {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  /* alleen vw-gebaseerd (geen minimum): schaalt altijd mee
+     met het scherm en steekt dus nooit uit */
+  font-size: min(11vw, 10.5rem);
+  line-height: 0.95;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+  white-space: nowrap;
+  user-select: none;
+  padding-top: 2.6rem;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-block: 2.6rem 2.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer__tag {
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0.9rem 0 1.3rem;
+  font-size: 0.93rem;
+  line-height: 1.65;
+  max-width: 26rem;
+}
+
+.footer__acties {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.footer__tiktok svg {
+  width: 15px;
+  height: 15px;
+}
+
+.footer__kol h3 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.footer__kol a {
+  display: block;
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.75);
+  padding-block: 0.3rem;
+  font-size: 0.95rem;
+  transition: color 0.25s ease;
+}
+
+.footer__kol a:hover {
+  color: var(--gold);
+}
+
+.footer__bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.6rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.82rem;
+}
+
+/* ------------------------------------------------------------
+   Knoppen
+   ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.28s ease, color 0.28s ease, border-color 0.28s ease,
+    transform 0.28s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn__arrow {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+.btn--icoon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn--solid {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.btn--solid:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--ink);
+}
+
+.btn--gold {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.btn--gold:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.btn--ghost-light {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn--ghost-light:hover {
+  border-color: #fff;
+}
+
+.btn--small {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.82rem;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------
+   Pagina's (Boeken / Admin)
+   ------------------------------------------------------------ */
+.page {
+  padding: 3.2rem 0 6rem;
+}
+
+.page__lead {
+  color: var(--muted);
+  max-width: 34rem;
+  margin-top: 1rem;
+  font-size: 1.05rem;
+}
+
+.banner {
+  border-radius: 12px;
+  padding: 0.95rem 1.2rem;
+  margin-block: 1.6rem;
+  font-size: 0.95rem;
+}
+
+.banner--error {
+  background: #fbf3f3;
+  border: 1px solid #e5b8b8;
+  color: #8a3a3a;
+}
+
+/* ------------------------------------------------------------
+   Formulier — custom look, geen default HTML-elementen
+   ------------------------------------------------------------ */
+.form {
+  margin-top: 2.6rem;
+}
+
+.form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 3rem;
+  /* fieldset heeft standaard min-width: min-content, waardoor brede
+     inhoud de pagina zou openduwen — dit schakelt dat uit */
+  min-inline-size: 0;
+}
+
+.form legend {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  font-family: var(--font-display);
+  font-stretch: 115%;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.form__nr {
+  color: var(--gold);
+  font-size: 0.85rem;
+}
+
+.form legend::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  margin-left: 0.5rem;
+}
+
+.form__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.4rem 1.6rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  grid-column: span 3;
+}
+
+.field--wide {
+  grid-column: span 6;
+}
+
+.field--groot {
+  grid-column: span 4;
+}
+
+.field--klein {
+  grid-column: span 2;
+}
+
+.field > span,
+.veld-blok__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+/* Onderlijn-stijl in plaats van default boxes */
+.field input,
+.field textarea {
+  font: inherit;
+  color: inherit;
+  border: none;
+  border-bottom: 2px solid var(--line);
+  border-radius: 0;
+  padding: 0.6rem 2px;
+  background: transparent;
+  transition: border-color 0.25s ease;
+  width: 100%;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #b8b5b1;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+/* Live validatie: kleur op de rand i.p.v. een foutbanner. Verschijnt
+   pas na blur (of na een mislukte submit-poging), niet meteen. */
+.field__invoer {
+  position: relative;
+}
+
+.field--fout input {
+  border-color: #a33b3b;
+}
+
+.field--geldig input {
+  border-color: var(--ink);
+  padding-right: 1.6rem;
+}
+
+.field__icoon--ok {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-4px);
+  width: 15px;
+  height: 15px;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.field__fout {
+  font-size: 0.76rem;
+  color: #a33b3b;
+  font-weight: 600;
+}
+
+.veld-blok {
+  margin-top: 1.8rem;
+}
+
+.veld-blok__label {
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.veld-blok__note {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+}
+
+/* Chips (tijdslot, duur) */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip {
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.6rem 1.15rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.chip:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.chip--actief {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* Maandkalender — custom date picker */
+.kalender {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.1rem 0.9rem;
+  max-width: 420px;
+  background: var(--paper);
+}
+
+.kalender__kop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.kalender__kop button {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.kalender__kop button:hover:not(:disabled) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.kalender__kop button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.kalender__label {
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.kalender__weekdagen {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 0.35rem;
+}
+
+.kalender__dagen {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.kdag {
+  position: relative;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.kdag:hover:not(:disabled) {
+  background: var(--soft);
+}
+
+.kdag:disabled {
+  color: #c9c6c2;
+  cursor: default;
+}
+
+.kdag--actief,
+.kdag--actief:hover:not(:disabled) {
+  background: var(--ink);
+  color: #fff;
+}
+
+.kdag--zondag::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.kdag--zondag:disabled::after {
+  opacity: 0.4;
+}
+
+.kdag--geblokkeerd {
+  background: var(--soft);
+  color: #b8b5b1;
+  text-decoration: line-through;
+}
+
+.kalender__legende {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 0.8rem;
+}
+
+.kalender__legende span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.kalender__stip {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: inline-block;
+  flex: none;
+}
+
+.kalender__stip--geblokkeerd {
+  background: #b8b5b1;
+}
+
+.veld-blok__gekozen {
+  margin-top: 0.9rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Verdieping-stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stepper button {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.stepper button:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.stepper__waarde {
+  min-width: 10rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Compacte variant voor krappe kolommen (admin-formulieren) */
+.stepper--compact {
+  gap: 0.5rem;
+}
+
+.stepper--compact button {
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+}
+
+.stepper--compact .stepper__waarde {
+  min-width: 1.6rem;
+  font-size: 0.95rem;
+}
+
+/* Richtprijs-hint */
+.prijs-hint {
+  display: inline-block;
+  margin-top: 1rem;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+}
+
+.tijd-preview {
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.tijd-preview--conflict {
+  color: #a33b3b;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   Dropdown — volledig eigen select (knop + portal-lijst),
+   vervangt native <select> en <input type="time">
+   ------------------------------------------------------------ */
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  border: none;
+  border-bottom: 2px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 0.7rem 2px;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.25s ease;
+}
+
+.dropdown:hover,
+.dropdown:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.dropdown__placeholder {
+  color: #b8b5b1;
+  font-weight: 500;
+}
+
+.dropdown__pijl {
+  width: 10px;
+  height: 7px;
+  flex: none;
+  opacity: 0.6;
+}
+
+.dropdown__lijst {
+  position: fixed;
+  z-index: 90;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+  padding: 0.4rem;
+  max-height: 260px;
+  overflow-y: auto;
+  animation: verschijn 0.15s ease both;
+}
+
+.dropdown__item {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0.8rem;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown__item:hover {
+  background: var(--soft);
+}
+
+.dropdown__item--actief {
+  background: var(--ink);
+  color: #fff;
+}
+
+/* Grotere, opvallende variant voor de starttijd */
+.tijd-dropdown {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-size: 1.4rem;
+  font-weight: 800;
+  max-width: 180px;
+  padding-block: 0.5rem;
+}
+
+/* Groot, goud eindtotaal onderaan het formulier */
+.totaal-kaart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
+  background: var(--ink);
+  border-radius: var(--radius);
+  padding: 2.2rem 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.totaal-kaart__label {
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.totaal-kaart__bedrag {
+  font-family: var(--font-display);
+  font-stretch: 120%;
+  font-size: clamp(2.6rem, 7vw, 3.6rem);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.totaal-kaart__note {
+  max-width: 26rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.82rem;
+  margin-top: 0.4rem;
+}
+
+.form__note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 0.9rem;
+}
+
+/* Succes-scherm na boeking */
+.success {
+  text-align: center;
+  padding-block: 3rem;
+}
+
+.success__check {
+  width: 92px;
+  height: 92px;
+  margin-inline: auto;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.success__check circle {
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: tekenCirkel 0.6s ease-out 0.1s forwards;
+}
+
+.success__check path {
+  stroke: var(--gold);
+  stroke-width: 3.5;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: tekenVink 0.35s ease-out 0.65s forwards;
+}
+
+.success h1 {
+  font-family: var(--font-display);
+  font-stretch: 118%;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-top: 1.4rem;
+}
+
+.success__ref {
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.success__ref strong {
+  color: var(--gold);
+}
+
+.success__tekst {
+  max-width: 30rem;
+  margin: 1.2rem auto 0;
+  color: var(--muted);
+}
+
+.success__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2.2rem;
+}
+
+/* ------------------------------------------------------------
+   Admin
+   ------------------------------------------------------------ */
+.admin__kop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin__aantal {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.6em;
+}
+
+.admin__acties {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.admin__filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.admin__zoek {
+  font: inherit;
+  border: none;
+  border-bottom: 2px solid var(--line);
+  background: transparent;
+  padding: 0.6rem 2px;
+  min-width: 260px;
+  transition: border-color 0.25s ease;
+}
+
+.admin__zoek:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.admin__leeg {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 3.5rem 2rem;
+  text-align: center;
+  color: var(--muted);
+  margin-top: 2rem;
+  font-weight: 600;
+}
+
+.admin__leeg-sub {
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.pulse {
+  animation: pols 1.4s ease-in-out infinite;
+}
+
+.draai {
+  display: inline-block;
+  animation: draai 0.9s linear infinite;
+}
+
+.tabel-scroll {
+  overflow-x: auto;
+  margin-top: 1.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* Mobiele kaartweergave: enkel getoond onder de 680px-breakpoint,
+   zie media query onderaan. Toont het minimum, doorklikken voor de rest. */
+.boeking-kaarten {
+  display: none;
+  list-style: none;
+  margin-top: 1.8rem;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.boeking-kaart {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.boeking-kaart:active {
+  border-color: var(--ink);
+}
+
+.boeking-kaart__rij {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.boeking-kaart__naam {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.boeking-kaart__meta {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.boeking-kaart__acties {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+
+.boeking-kaart__bel {
+  flex: 1;
+}
+
+.boeking-kaart__bel svg {
+  width: 15px;
+  height: 15px;
+}
+
+.tabel {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.tabel thead {
+  background: var(--soft);
+}
+
+.tabel th {
+  text-align: left;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabel td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: 0.95rem;
+}
+
+.tabel tbody tr {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.tabel tbody tr:hover {
+  background: var(--soft);
+}
+
+.tabel tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabel__id {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.tabel__sub {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 2px;
+  font-weight: 400;
+}
+
+.tabel__acties {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tabel__delete,
+.tabel__bel {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.tabel__bel svg {
+  width: 15px;
+  height: 15px;
+}
+
+.tabel__delete:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.tabel__bel:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+/* Statuspil-knop + eigen dropdownmenu (StatusMenu) */
+.status {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.55rem 1rem 0.55rem 1.15rem;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  background: var(--paper);
+  transition: border-color 0.25s ease;
+  font-family: var(--font-body);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.status__pijl {
+  width: 9px;
+  height: 6px;
+  opacity: 0.6;
+  flex: none;
+}
+
+.status--aangevraagd {
+  border-color: #d6d3d1;
+}
+
+.status--bevestigd {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.status--afgerond {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+}
+
+.status--geannuleerd {
+  background: var(--soft);
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* Via een portal in <body> gerenderd: fixed en boven alles, ontsnapt
+   aan elke overflow:hidden/auto van een ouder (bv. de tabel-scroll). */
+.status-menu__lijst {
+  position: fixed;
+  z-index: 90;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+  padding: 0.4rem;
+  min-width: 160px;
+  animation: verschijn 0.15s ease both;
+}
+
+.status-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.status-menu__item:hover {
+  background: var(--soft);
+}
+
+.status-menu__item--actief {
+  color: var(--gold);
+}
+
+.status-menu__stip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d6d3d1;
+  flex: none;
+}
+
+.status-menu__stip--bevestigd {
+  background: var(--ink);
+}
+
+.status-menu__stip--afgerond {
+  background: var(--gold);
+}
+
+.status-menu__stip--geannuleerd {
+  background: var(--muted);
+}
+
+/* Detail-drawer */
+.drawer__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 11, 12, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 70;
+  animation: verschijn 0.3s ease both;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(430px, 94vw);
+  background: var(--paper);
+  z-index: 80;
+  padding: 2rem;
+  overflow-y: auto;
+  box-shadow: -24px 0 60px rgba(0, 0, 0, 0.18);
+  animation: schuifIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.drawer__kop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.drawer__kop h2 {
+  font-family: var(--font-display);
+  font-stretch: 115%;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.drawer__id {
+  color: var(--gold);
+}
+
+.drawer__sluit {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.drawer__sluit:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+.drawer__lijst {
+  margin-block: 1.2rem 2rem;
+}
+
+.drawer__lijst dt {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: var(--muted);
+  margin-top: 1.05rem;
+}
+
+.drawer__lijst dd {
+  margin: 0.2rem 0 0;
+  font-size: 0.98rem;
+}
+
+.drawer__lijst a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.drawer__statusrij {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0.8rem 0 0.4rem;
+}
+
+.drawer__statusrij .btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.drawer__acties {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+/* Inlogscherm */
+.admin-login {
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.admin-login .page__lead {
+  margin-inline: auto;
+}
+
+.admin-login__form {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  text-align: left;
+}
+
+/* Compact formulier binnen de admin-drawer (nieuwe boeking / bewerken) */
+.admin-form {
+  margin-top: 1.6rem;
+  margin-bottom: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.admin-form .form__grid {
+  gap: 1rem 1.2rem;
+}
+
+.admin-form__intro {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+}
+
+/* Lijst geblokkeerde dagen (beschikbaarheid) */
+.blok-lijst {
+  list-style: none;
+  margin-top: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.blok-lijst li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.blok-lijst__reden {
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 0.4rem;
+}
+
+.blok-lijst li button {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.blok-lijst li button:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------
+   Scroll-reveals
+   ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------
+   Keyframes
+   ------------------------------------------------------------ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zweef {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(45px, -35px) scale(1.08);
+  }
+}
+
+@keyframes tekenCirkel {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes tekenVink {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pols {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes draai {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes verschijn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes schuifIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 980px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .troeven {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .info-kaarten {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .troeven {
+    grid-template-columns: 1fr;
+  }
+
+  /* Admin: kaarten i.p.v. een horizontaal scrollende tabel */
+  .tabel-scroll {
+    display: none;
+  }
+
+  .boeking-kaarten {
+    display: flex;
+    padding: 0;
+  }
+
+  .admin__filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin__zoek {
+    min-width: 0;
+  }
+
+  .form__grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header__inner {
+    padding-block: 0.85rem;
+  }
+
+  .header__nav {
+    gap: 0.85rem;
+  }
+
+  .header__nav a:not(.btn) {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .header .logo {
+    font-size: 1.02rem;
+  }
+
+  .header .btn--small {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.74rem;
+  }
+
+  .hero {
+    min-height: 78svh;
+  }
+
+  .hero__twee {
+    font-size: 62vw;
+  }
+
+  .hero__vorm--dot {
+    left: 8%;
+    top: 18%;
+  }
+
+  .hero__vorm--ring {
+    right: 6%;
+    bottom: 10%;
+  }
+
+  .hero__ring {
+    width: 74px;
+    height: 74px;
+  }
+
+  .hero__lead {
+    font-size: 1.08rem;
+  }
+
+  .tarief {
+    grid-template-columns: 1fr auto;
+  }
+
+  .tarief__half {
+    grid-column: 1 / -1;
+    margin-top: -0.6rem;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer__bar {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .section {
+    padding-block: 4.5rem;
+  }
+
+  .stepper__waarde {
+    min-width: 8rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   Toegankelijkheid: minder beweging
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .fade-item {
+    opacity: 1;
+    animation: none;
+  }
+}

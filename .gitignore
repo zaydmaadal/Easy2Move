@@ -1,0 +1,31 @@
+# --- .NET ---
+bin/
+obj/
+*.user
+.vs/
+
+# --- Geheimen: nooit committen ---
+appsettings.Local.json
+appsettings.*.Local.json
+
+# --- Database (runtime-data, geen broncode) ---
+*.db
+*.db-shm
+*.db-wal
+
+# --- Frontend (heeft ook een eigen .gitignore, dit is een extra net) ---
+node_modules/
+dist/
+*.local
+
+# --- Editor/OS ---
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Niet jouw code: referentieproject, enkel lokaal ter inspiratie ---
+sportfeed(Example)/
+
+# --- Claude Code tooling, geen projectcode ---
+.agents/
+skills-lock.json

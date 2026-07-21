@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Easy2Move.API/Easy2Move.API.csproj" />
+  <Project Path="Easy2Move.Application/Easy2Move.Application.csproj" />
+  <Project Path="Easy2Move.Contracts/Easy2Move.Contracts.csproj" />
+</Solution>
