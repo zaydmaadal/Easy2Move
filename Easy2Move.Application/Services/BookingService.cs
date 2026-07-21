@@ -34,7 +34,14 @@ public class BookingService(BookingDbContext context) : IBookingService
         var existing = await context.Bookings.FindAsync(id);
         if (existing == null) return null;
 
-        await GarandeerNietGeblokkeerd(booking.Datum);
+        // Enkel controleren als de datum echt verandert - anders zou een
+        // dag die pas ná het boeken geblokkeerd werd (bv. vakantie) het
+        // beheer van die bestaande boeking (status wijzigen, etc.)
+        // onmogelijk maken.
+        if (booking.Datum.Date != existing.Datum.Date)
+        {
+            await GarandeerNietGeblokkeerd(booking.Datum);
+        }
         await GarandeerGeenConflict(booking.Datum, booking.Tijdslot, uitgeslotenId: id);
 
         existing.KlantNaam = booking.KlantNaam;

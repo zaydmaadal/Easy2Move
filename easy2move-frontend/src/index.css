@@ -864,8 +864,13 @@ button {
 }
 
 .btn--gold:hover {
-  background: transparent;
-  color: #fff;
+  /* Bewust een donkerdere volle vulling i.p.v. transparant: deze knop
+     wordt zowel op een witte achtergrond (mobiele admin-kaart) als op
+     een donkere sectie (CTA-band) gebruikt. Transparant + witte tekst
+     werd onzichtbaar op wit; dit blijft overal leesbaar. */
+  background: #a3801e;
+  border-color: #a3801e;
+  color: var(--ink);
 }
 
 .btn--ghost-light {
@@ -1706,9 +1711,16 @@ button {
   font-weight: 400;
 }
 
-.tabel__acties {
+/* Hogere specificiteit dan ".tabel td" nodig om vertical-align: top
+   daar te overschrijven - anders zakken deze knopjes niet mee naar
+   het midden van de rij wanneer andere cellen (bv. status-pil) hoger
+   zijn dan de 32px rond-knopjes hier. */
+.tabel td.tabel__acties {
   display: flex;
+  align-items: center;
+  height: 100%;
   gap: 0.4rem;
+  vertical-align: middle;
 }
 
 .tabel__delete,
