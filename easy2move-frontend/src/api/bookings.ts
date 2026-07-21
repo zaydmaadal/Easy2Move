@@ -1,9 +1,9 @@
 import type { BookingDto, NewBooking } from '../types/booking'
-import { http } from './client'
+import { API_BASE, http } from './client'
 
 export { ApiError, controleerAdminKey, getAdminKey, setAdminKey, wisAdminKey } from './client'
 
-const BASE = '/api/bookings'
+const BASE = `${API_BASE}/api/bookings`
 
 // Publiek: geen sleutel nodig
 export const createBooking = (booking: NewBooking) =>

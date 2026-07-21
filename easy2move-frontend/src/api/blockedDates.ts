@@ -1,7 +1,7 @@
 import type { BlockedDateDto } from '../types/blockedDate'
-import { http } from './client'
+import { API_BASE, http } from './client'
 
-const BASE = '/api/blocked-dates'
+const BASE = `${API_BASE}/api/blocked-dates`
 
 // Publiek: de boekingskalender moet geblokkeerde dagen kunnen tonen
 export const getBlockedDates = () => http<BlockedDateDto[]>(BASE)

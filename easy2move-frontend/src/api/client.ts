@@ -1,3 +1,8 @@
+// In dev leeg (relatieve paden, via Vite's proxy naar localhost:5269).
+// In productie gezet via de build-time env var VITE_API_BASE_URL,
+// zodra de frontend op een ander domein staat dan de API.
+export const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
+
 const ADMIN_KEY_OPSLAG = 'easy2move_admin_key'
 
 export class ApiError extends Error {
@@ -46,7 +51,7 @@ export async function http<T>(url: string, init?: RequestInit, metAdminKey = fal
 
 // Test of een sleutel geldig is door er gewoon een admin-call mee te doen.
 export async function controleerAdminKey(key: string): Promise<boolean> {
-  const res = await fetch('/api/bookings', { headers: { 'X-Admin-Key': key } })
+  const res = await fetch(`${API_BASE}/api/bookings`, { headers: { 'X-Admin-Key': key } })
   if (res.ok) {
     setAdminKey(key)
     return true

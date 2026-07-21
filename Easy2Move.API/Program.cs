@@ -15,6 +15,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.RegisterApplication(builder.Configuration);
 
+// Nodig zodra de frontend op een ander domein draait dan de API (nu nog
+// niet het geval in dev, want Vite's proxy maakt dat onzichtbaar voor de
+// browser). Toegestane origins staan in config onder "Cors:AllowedOrigins"
+// - lokaal in appsettings.Local.json, op Render via environment variable
+// Cors__AllowedOrigins__0 zodra de frontend een echte URL heeft.
+var toegestaneOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+        policy.WithOrigins(toegestaneOrigins).AllowAnyHeader().AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 
 app.MapControllers();
 
