@@ -1711,16 +1711,18 @@ button {
   font-weight: 400;
 }
 
-/* Hogere specificiteit dan ".tabel td" nodig om vertical-align: top
-   daar te overschrijven - anders zakken deze knopjes niet mee naar
-   het midden van de rij wanneer andere cellen (bv. status-pil) hoger
-   zijn dan de 32px rond-knopjes hier. */
+/* display:flex rechtstreeks op een <td> vervangt zijn display:table-cell,
+   waardoor vertical-align niet meer betrouwbaar werkt. Daarom centreert
+   de cel zelf via vertical-align (echte tabel-centrering), en zorgt een
+   <div> erbinnen (.tabel__acties-rij) enkel voor de horizontale gap. */
 .tabel td.tabel__acties {
+  vertical-align: middle;
+}
+
+.tabel__acties-rij {
   display: flex;
   align-items: center;
-  height: 100%;
   gap: 0.4rem;
-  vertical-align: middle;
 }
 
 .tabel__delete,

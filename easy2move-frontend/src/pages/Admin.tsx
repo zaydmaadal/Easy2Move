@@ -857,12 +857,14 @@ export default function Admin() {
                         <StatusMenu status={b.status} onChange={(status) => void wijzigStatus(b, status)} />
                       </td>
                       <td className="tabel__acties" onClick={(e) => e.stopPropagation()}>
-                        <button type="button" className="tabel__bel" title="Bellen" onClick={(e) => onTel(e, b.telefoon)}>
-                          <CallIcon />
-                        </button>
-                        <button type="button" className="tabel__delete" title="Verwijderen" onClick={() => void verwijder(b)}>
-                          ×
-                        </button>
+                        <div className="tabel__acties-rij">
+                          <button type="button" className="tabel__bel" title="Bellen" onClick={(e) => onTel(e, b.telefoon)}>
+                            <CallIcon />
+                          </button>
+                          <button type="button" className="tabel__delete" title="Verwijderen" onClick={() => void verwijder(b)}>
+                            ×
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
