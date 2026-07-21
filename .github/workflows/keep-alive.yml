@@ -1,0 +1,16 @@
+name: Keep API alive
+
+# Render's gratis tier zet de service in slaap na 15 min zonder verkeer;
+# de eerstvolgende echte klant zou dan 30-60s moeten wachten. Deze ping
+# elke 10 minuten voorkomt dat, door /health simpelweg te blijven bezoeken.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health
+        run: curl -sf "${{ vars.API_URL }}/health" || exit 1

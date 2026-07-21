@@ -14,7 +14,7 @@ public static class Registrations
         IConfiguration configuration)
     {
         services.AddDbContext<BookingDbContext>(options =>
-            options.UseSqlite(configuration.GetConnectionString("BookingDb")));
+            options.UseNpgsql(configuration.GetConnectionString("BookingDb")));
 
         services.AddScoped<IBookingService, BookingService>();
         services.AddScoped<IBlockedDateService, BlockedDateService>();

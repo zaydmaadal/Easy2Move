@@ -1,0 +1,21 @@
+# Lokale (Windows) build-artefacten - zouden botsen met de Linux-container
+# en horen sowieso niet in de Docker-build-context.
+**/bin/
+**/obj/
+
+# Frontend wordt apart gehost (niet in deze image)
+easy2move-frontend/
+node_modules/
+
+# Niet nodig in de image
+sportfeed(Example)/
+.git/
+.github/
+*.md
+
+# Geheimen en lokale data - nooit in een image bakken
+appsettings.Local.json
+**/appsettings.Local.json
+*.db
+*.db-shm
+*.db-wal

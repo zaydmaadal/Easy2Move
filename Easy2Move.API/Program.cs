@@ -29,4 +29,9 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+// Publiek, geen database-call: voor Render's eigen health-check en
+// voor de keep-alive ping (zie .github/workflows/keep-alive.yml) die
+// voorkomt dat de gratis service na 15 min inactiviteit in slaap valt.
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
 app.Run();
