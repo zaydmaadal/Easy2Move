@@ -3,6 +3,7 @@ using Easy2Move.Application.Exceptions;
 using Easy2Move.Contracts.Interfaces;
 using Easy2Move.Contracts.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Easy2Move.API.Controllers;
 
@@ -42,6 +43,7 @@ public class BookingController(IBookingService bookingService) : ControllerBase
     // "Bevestigd" claimen). We negeren wat er binnenkomt en forceren de
     // startstatus zelf.
     [HttpPost]
+    [EnableRateLimiting("PubliekeBoeking")]
     public async Task<ActionResult<BookingDto>> Create(BookingDto booking)
     {
         booking.Status = "Aangevraagd";
