@@ -16,7 +16,7 @@ import {
   deleteBlockedDate,
   getBlockedDates,
 } from '../api/blockedDates'
-import type { BookingDto } from '../types/booking'
+import type { BookingDto, BookingStatus } from '../types/booking'
 import type { BlockedDateDto } from '../types/blockedDate'
 import { tijdslotVan } from '../lib/tijd'
 import { geldigTelefoonnummer, geldigeEmail, geldigePostcode, nietLeeg } from '../lib/validatie'
@@ -40,7 +40,7 @@ type VeldenState = {
   startTijd: string
   geschatteDuurUren: number
   opmerkingen: string
-  status: string
+  status: BookingStatus
 }
 
 const LEGE_VELDEN: VeldenState = {
@@ -669,7 +669,7 @@ export default function Admin() {
     )
   }, [bookings, tab, zoekterm])
 
-  async function wijzigStatus(booking: BookingDto, status: string) {
+  async function wijzigStatus(booking: BookingDto, status: BookingStatus) {
     const vorige = booking.status
     setBookings((bs) => bs.map((b) => (b.id === booking.id ? { ...b, status } : b)))
     setDetail((d) => (d && d.id === booking.id ? { ...d, status } : d))

@@ -1,10 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { STATUSSEN } from '../types/booking'
+import { STATUSSEN, type BookingStatus } from '../types/booking'
 
 type StatusMenuProps = {
-  status: string
-  onChange: (status: string) => void
+  status: BookingStatus
+  onChange: (status: BookingStatus) => void
 }
 
 // Eigen dropdown i.p.v. een native <select>. Het menu wordt via een
