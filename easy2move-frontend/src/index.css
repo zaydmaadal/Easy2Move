@@ -18,7 +18,7 @@
      (knoppen, streepjes) blijft --gold prima, want daar telt enkel het
      contrast van de tekst erop (donker), niet van de kleur zelf. Voor
      goud gebruikt ALS tekstkleur op een lichte ondergrond: deze variant. */
-  --gold-text: #82681a;
+  --gold-text: #c8a028;
   --radius: 16px;
   --font-display: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
