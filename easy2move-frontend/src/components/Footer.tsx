@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__kol">
-          <h3>Contact</h3>
+          <h2>Contact</h2>
           <a href="tel:+32485690909">0485 69 09 09</a>
           <a href="mailto:info@easy2move.be">info@easy2move.be</a>
           <a href="https://www.tiktok.com/@easy2move7" target="_blank" rel="noreferrer">
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__kol">
-          <h3>Site</h3>
+          <h2>Site</h2>
           <Link to="/">Home</Link>
           <Link to="/boeken">Boeken</Link>
         </div>

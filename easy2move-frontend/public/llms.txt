@@ -1,0 +1,13 @@
+# Easy2Move
+
+> Easy2Move verhuurt ladderliften voor verhuizingen in Antwerpen en omstreken, 24 uur per dag bereikbaar sinds 2007. Meubels en dozen gaan veilig langs de gevel naar boven of beneden, in plaats van via het trappenhuis.
+
+## Pagina's
+
+- [Home](https://easy2move.vercel.app/): overzicht van de dienst, tarieven per verdieping en praktische informatie.
+- [Boeken](https://easy2move.vercel.app/boeken): een ladderlift reserveren met datum, tijdstip en adres.
+
+## Contact
+
+- Telefoon: 0485 69 09 09
+- E-mail: info@easy2move.be

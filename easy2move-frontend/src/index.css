@@ -13,6 +13,12 @@
   --muted: #6f6f6f;
   --gold: #c8a028;
   --gold-soft: #f5edd8;
+  /* --gold zelf is te licht voor tekst op een witte/lichte achtergrond
+     (~2.5:1, WCAG AA vereist 4.5:1). Voor achtergronden/randen/lijnen
+     (knoppen, streepjes) blijft --gold prima, want daar telt enkel het
+     contrast van de tekst erop (donker), niet van de kleur zelf. Voor
+     goud gebruikt ALS tekstkleur op een lichte ondergrond: deze variant. */
+  --gold-text: #82681a;
   --radius: 16px;
   --font-display: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -166,7 +172,7 @@ button {
 }
 
 .logo__2 {
-  color: var(--gold);
+  color: var(--gold-text);
   font-size: 1.32em;
   line-height: 1;
   position: relative;
@@ -769,7 +775,7 @@ button {
   height: 15px;
 }
 
-.footer__kol h3 {
+.footer__kol h2 {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.22em;
@@ -956,7 +962,7 @@ button {
 }
 
 .form__nr {
-  color: var(--gold);
+  color: var(--gold-text);
   font-size: 0.85rem;
 }
 
@@ -1505,7 +1511,7 @@ button {
 }
 
 .success__ref strong {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 
 .success__tekst {
@@ -1839,7 +1845,7 @@ button {
 }
 
 .status-menu__item--actief {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 
 .status-menu__stip {
@@ -1902,7 +1908,7 @@ button {
 }
 
 .drawer__id {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 
 .drawer__sluit {
