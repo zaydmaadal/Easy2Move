@@ -46,7 +46,7 @@ public class BookingController(IBookingService bookingService) : ControllerBase
     [EnableRateLimiting("PubliekeBoeking")]
     public async Task<ActionResult<BookingDto>> Create(BookingDto booking)
     {
-        booking.Status = "Aangevraagd";
+        booking.Status = BookingStatus.Aangevraagd;
         try
         {
             var created = await bookingService.CreateBooking(booking);

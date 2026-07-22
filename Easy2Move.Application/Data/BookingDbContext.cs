@@ -17,6 +17,15 @@ public class BookingDbContext(DbContextOptions<BookingDbContext> options) : DbCo
     // normaliseert dat altijd, ongeacht waar de DateTime vandaan komt.
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Status was tot voor kort een kale string en de kolom bevat al
+        // echte rijen met tekstwaarden ("Afgerond", enz.). HasConversion<string>
+        // slaat de enum nog steeds op als tekst (enum-naam), dus bestaande
+        // rijen blijven zonder backfill leesbaar - enkel het C#-model wordt
+        // strenger, niet de kolom.
+        modelBuilder.Entity<BookingDto>()
+            .Property(b => b.Status)
+            .HasConversion<string>();
+
         var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
             v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified),
             v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified));

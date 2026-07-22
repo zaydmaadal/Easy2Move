@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Easy2Move.Application;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -11,7 +12,16 @@ builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, relo
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddControllers();
+// JsonStringEnumConverter: zonder dit serialiseert System.Text.Json een
+// enum als getal (0,1,2,...). BookingStatus moet als tekst ("Bevestigd")
+// over de lijn blijven gaan, want de frontend bouwt daar CSS-klassen en
+// tab-filters op - dit houdt de JSON-vorm exact hetzelfde als toen Status
+// nog een kale string was.
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

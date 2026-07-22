@@ -75,7 +75,7 @@ public class BookingService(BookingDbContext context) : IBookingService
     public async Task<List<string>> GetBezetteTijdslotenOp(DateTime datum)
     {
         return await context.Bookings
-            .Where(b => b.Datum.Date == datum.Date && b.Status != "Geannuleerd")
+            .Where(b => b.Datum.Date == datum.Date && b.Status != BookingStatus.Geannuleerd)
             .Select(b => b.Tijdslot)
             .ToListAsync();
     }
@@ -96,7 +96,7 @@ public class BookingService(BookingDbContext context) : IBookingService
         var (start, eind) = ParseTijdslot(tijdslot);
 
         var opDezelfdeDag = await context.Bookings
-            .Where(b => b.Datum.Date == datum.Date && b.Status != "Geannuleerd")
+            .Where(b => b.Datum.Date == datum.Date && b.Status != BookingStatus.Geannuleerd)
             .ToListAsync();
 
         foreach (var bestaande in opDezelfdeDag)

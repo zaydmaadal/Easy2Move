@@ -45,6 +45,6 @@ public class BookingDto
     [MaxLength(1000)]
     public string Opmerkingen { get; set; } = string.Empty;
 
-    public string Status { get; set; } = "Aangevraagd";
+    public BookingStatus Status { get; set; } = BookingStatus.Aangevraagd;
     public DateTime AangemaaktOp { get; set; } = DateTime.UtcNow;
 }
