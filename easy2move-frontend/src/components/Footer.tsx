@@ -57,6 +57,12 @@ export default function Footer() {
       <div className="container footer__bar">
         <span>© {new Date().getFullYear()} Easy2Move, ladderlift service en verhuizing</span>
         <span>BTW BE 1014.87.44.75</span>
+        <span className="footer__credit">
+          Website door{' '}
+          <a href="https://www.zaydmaadal.site/" target="_blank" rel="noreferrer">
+            Zayd Maadal
+          </a>
+        </span>
       </div>
     </footer>
   )

@@ -807,6 +807,16 @@ button {
   font-size: 0.82rem;
 }
 
+.footer__credit a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__credit a:hover {
+  color: var(--gold);
+}
+
 /* ------------------------------------------------------------
    Knoppen
    ------------------------------------------------------------ */
