@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../components/Logo'
+import { CONTACT } from '../lib/contact'
 import Marquee from '../components/Marquee'
 import Reveal from '../components/Reveal'
 import Seo from '../components/Seo'
@@ -163,7 +164,7 @@ export default function Home() {
             <Link to="/boeken" className="btn btn--solid">
               Boek een ladderlift <span className="btn__arrow">→</span>
             </Link>
-            <a href="tel:+32485690909" className="btn btn--ghost btn--icoon">
+            <a href={CONTACT.telefoonHref} className="btn btn--ghost btn--icoon">
               <BelIcon /> Bel ons
             </a>
           </div>
@@ -301,7 +302,7 @@ export default function Home() {
               <Link to="/boeken" className="btn btn--gold">
                 Boek nu <span className="btn__arrow">→</span>
               </Link>
-              <a href="tel:+32485690909" className="btn btn--ghost-light btn--icoon">
+              <a href={CONTACT.telefoonHref} className="btn btn--ghost-light btn--icoon">
                 <BelIcon /> Bel ons
               </a>
             </div>

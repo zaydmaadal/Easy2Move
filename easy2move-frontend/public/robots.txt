@@ -1,5 +1,5 @@
+# Bewust geen "Disallow": Google moet de noindex-header/-meta kunnen lezen
+# om bestaande zoekresultaten te laten vervallen. Pas daarna kan dit op
+# "Disallow: /" als je ook crawlen wil blokkeren.
 User-agent: *
 Allow: /
-Disallow: /admin
-
-Sitemap: https://easy2move.vercel.app/sitemap.xml

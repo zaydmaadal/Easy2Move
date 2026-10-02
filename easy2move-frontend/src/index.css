@@ -770,11 +770,6 @@ button {
   flex-wrap: wrap;
 }
 
-.footer__tiktok svg {
-  width: 15px;
-  height: 15px;
-}
-
 .footer__kol h2 {
   font-size: 0.72rem;
   text-transform: uppercase;

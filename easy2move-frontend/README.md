@@ -1,3 +1,14 @@
+# Easy2Move frontend: portfolio-demo (branch `portfolio-demo`)
+
+Deze branch is de demo die vanuit het portfolio gelinkt wordt. Verschillen met `main`:
+
+- **Geen backend**: `src/api/demoServer.ts` bootst de .NET-API na (zelfde endpoints, validatie, 401/409/429) en bewaart alles per bezoeker in `localStorage`. Admin: elk niet-leeg wachtwoord werkt.
+- **Placeholder-contactgegevens** in `src/lib/contact.ts` (telefoon, e-mail, btw).
+- **Niet vindbaar op Google**: `noindex` in `index.html` en `Seo.tsx`, `X-Robots-Tag` in `vercel.json`, geen sitemap/llms.txt/JSON-LD.
+- `src/lib/demo.ts`: demo-modus staat standaard aan. Een build met `VITE_DEMO_MODE=false` gebruikt weer de echte API (`VITE_API_BASE_URL`).
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.

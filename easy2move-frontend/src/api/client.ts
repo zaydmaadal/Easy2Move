@@ -1,7 +1,14 @@
+import { DEMO } from '../lib/demo'
+import { demoFetch } from './demoServer'
+
 // In dev leeg (relatieve paden, via Vite's proxy naar localhost:5269).
 // In productie gezet via de build-time env var VITE_API_BASE_URL,
 // zodra de frontend op een ander domein staat dan de API.
 export const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
+
+// In demo-modus (zie lib/demo.ts) vervangt een nagebootste backend in de
+// browser de echte fetch; verder blijft alles hieronder identiek.
+const doFetch: typeof fetch = DEMO ? (url, init) => demoFetch(String(url), init) : (url, init) => fetch(url, init)
 
 const ADMIN_KEY_OPSLAG = 'easy2move_admin_key'
 
@@ -32,7 +39,7 @@ export async function http<T>(url: string, init?: RequestInit, metAdminKey = fal
     if (key) headers['X-Admin-Key'] = key
   }
 
-  const res = await fetch(url, { headers, ...init })
+  const res = await doFetch(url, { headers, ...init })
 
   if (!res.ok) {
     const body = await res.json().catch(() => null)
@@ -50,8 +57,9 @@ export async function http<T>(url: string, init?: RequestInit, metAdminKey = fal
 }
 
 // Test of een sleutel geldig is door er gewoon een admin-call mee te doen.
+// (In demo-modus is elk niet-leeg wachtwoord goed.)
 export async function controleerAdminKey(key: string): Promise<boolean> {
-  const res = await fetch(`${API_BASE}/api/bookings`, { headers: { 'X-Admin-Key': key } })
+  const res = await doFetch(`${API_BASE}/api/bookings`, { headers: { 'X-Admin-Key': key } })
   if (res.ok) {
     setAdminKey(key)
     return true

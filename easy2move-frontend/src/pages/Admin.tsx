@@ -18,6 +18,7 @@ import {
 } from '../api/blockedDates'
 import type { BookingDto, BookingStatus } from '../types/booking'
 import type { BlockedDateDto } from '../types/blockedDate'
+import { DEMO } from '../lib/demo'
 import { tijdslotVan } from '../lib/tijd'
 import { geldigTelefoonnummer, geldigeEmail, geldigePostcode, nietLeeg } from '../lib/validatie'
 import StatusMenu from '../components/StatusMenu'
@@ -327,7 +328,11 @@ function InlogScherm({ onIngelogd }: { onIngelogd: () => void }) {
       <div className="container container--narrow admin-login">
         <p className="overline">Admin</p>
         <h1 className="section__title">Inloggen</h1>
-        <p className="page__lead">Enkel voor Easy2Move zelf. Vraag het wachtwoord aan de eigenaar.</p>
+        <p className="page__lead">
+          {DEMO
+            ? 'Demo-omgeving: vul een willekeurig wachtwoord in om het beheerpaneel te bekijken.'
+            : 'Enkel voor Easy2Move zelf. Vraag het wachtwoord aan de eigenaar.'}
+        </p>
         <form onSubmit={onSubmit} className="admin-login__form" noValidate>
           <Veld
             className="field--wide"

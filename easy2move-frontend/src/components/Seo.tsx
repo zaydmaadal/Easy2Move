@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { DEMO } from '../lib/demo'
 
 type SeoProps = {
   titel: string
@@ -31,7 +32,7 @@ export default function Seo({ titel, beschrijving, pad, noIndex = false }: SeoPr
     }
 
     zetMeta('description', beschrijving)
-    zetMeta('robots', noIndex ? 'noindex, nofollow' : 'index, follow')
+    zetMeta('robots', noIndex || DEMO ? 'noindex, nofollow' : 'index, follow')
     zetMeta('og:title', titel, true)
     zetMeta('og:description', beschrijving, true)
     zetMeta('og:url', `${SITE}${pad}`, true)
