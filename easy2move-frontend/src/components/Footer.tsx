@@ -6,15 +6,14 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__mark" aria-hidden="true">
-        EASY2MOVE
+        LIFTUP
       </div>
 
       <div className="container footer__grid">
         <div className="footer__kol footer__kol--merk">
           <Logo />
           <p className="footer__tag">
-            Ladderlift service &amp; verhuizing in Antwerpen en omstreken. 24/24 beschikbaar,
-            sinds 2007.
+            Ladderlift verhuur en verhuishulp in heel Vlaanderen. 24/24 beschikbaar.
           </p>
           <div className="footer__acties">
             <a href={CONTACT.telefoonHref} className="btn btn--gold btn--small">
@@ -37,7 +36,7 @@ export default function Footer() {
       </div>
 
       <div className="container footer__bar">
-        <span>© {new Date().getFullYear()} Easy2Move, ladderlift service en verhuizing</span>
+        <span>© {new Date().getFullYear()} LiftUp, ladderlift verhuur</span>
         <span>BTW {CONTACT.btw}</span>
         <span className="footer__credit">
           Website door{' '}

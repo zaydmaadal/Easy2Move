@@ -324,14 +324,14 @@ function InlogScherm({ onIngelogd }: { onIngelogd: () => void }) {
 
   return (
     <section className="page section">
-      <Seo titel="Admin: Easy2Move" beschrijving="Beheeromgeving voor Easy2Move." pad="/admin" noIndex />
+      <Seo titel="Admin: LiftUp" beschrijving="Beheeromgeving voor LiftUp." pad="/admin" noIndex />
       <div className="container container--narrow admin-login">
         <p className="overline">Admin</p>
         <h1 className="section__title">Inloggen</h1>
         <p className="page__lead">
           {DEMO
             ? 'Demo-omgeving: vul een willekeurig wachtwoord in om het beheerpaneel te bekijken.'
-            : 'Enkel voor Easy2Move zelf. Vraag het wachtwoord aan de eigenaar.'}
+            : 'Enkel voor LiftUp zelf. Vraag het wachtwoord aan de eigenaar.'}
         </p>
         <form onSubmit={onSubmit} className="admin-login__form" noValidate>
           <Veld
@@ -742,7 +742,7 @@ export default function Admin() {
 
   return (
     <section className="page section">
-      <Seo titel="Admin: Easy2Move" beschrijving="Beheeromgeving voor Easy2Move." pad="/admin" noIndex />
+      <Seo titel="Admin: LiftUp" beschrijving="Beheeromgeving voor LiftUp." pad="/admin" noIndex />
       <div className="container">
         <div className="admin__kop">
           <div>

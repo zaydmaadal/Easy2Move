@@ -1,10 +1,10 @@
-// Tarieven inclusief btw, van easy2move.be
+// Tarieven inclusief btw (fictief)
 export function richtprijsPerUur(verdieping: number): number {
-  if (verdieping <= 5) return 80
-  if (verdieping <= 7) return 90
-  if (verdieping === 8) return 100
-  if (verdieping === 9) return 130
-  return 150
+  if (verdieping <= 5) return 90
+  if (verdieping <= 7) return 100
+  if (verdieping === 8) return 110
+  if (verdieping === 9) return 140
+  return 160
 }
 
 // yyyy-mm-dd lokaal interpreteren, anders schuift new Date(iso) een dag op

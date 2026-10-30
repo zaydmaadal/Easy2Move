@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
       <div className="container header__inner">
-        <Link to="/" className="header__brand" aria-label="Easy2Move, naar de homepage">
+        <Link to="/" className="header__brand" aria-label="LiftUp, naar de homepage">
           <Logo />
         </Link>
         <nav className="header__nav">

@@ -4,7 +4,7 @@ const ITEMS = [
   'Ladderlift service',
   'Verhuizingen',
   '24/24 beschikbaar',
-  'Sinds 2007',
+  'Vaste prijzen',
   'Tot de 10de verdieping',
 ]
 

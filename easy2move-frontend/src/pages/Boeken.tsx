@@ -120,8 +120,8 @@ export default function Boeken() {
     return (
       <section className="page section">
         <Seo
-          titel="Boeking ontvangen: Easy2Move"
-          beschrijving="Je ladderlift-aanvraag bij Easy2Move is ontvangen. We bevestigen zo snel mogelijk."
+          titel="Boeking ontvangen: LiftUp"
+          beschrijving="Je ladderlift-aanvraag bij LiftUp is ontvangen. We bevestigen zo snel mogelijk."
           pad="/boeken"
           noIndex
         />
@@ -168,7 +168,7 @@ export default function Boeken() {
   return (
     <section className="page section">
       <Seo
-        titel="Ladderlift boeken: Easy2Move Antwerpen"
+        titel="Ladderlift boeken: LiftUp"
         beschrijving="Reserveer je ladderlift online. Kies je datum, tijdstip en adres, wij bevestigen zo snel mogelijk."
         pad="/boeken"
       />
@@ -302,8 +302,8 @@ export default function Boeken() {
                   Richtprijs <strong>€{uurtarief}/uur</strong>, inclusief btw
                 </p>
                 <p className="veld-blok__note">
-                  Deze tarieven gelden voor Klein-Antwerpen. Buiten die zone rekenen we een
-                  kleine verplaatsingskost aan.
+                  Deze tarieven gelden binnen 20 km van ons depot. Daarbuiten rekenen we
+                  een kleine verplaatsingskost aan.
                 </p>
               </div>
             </fieldset>

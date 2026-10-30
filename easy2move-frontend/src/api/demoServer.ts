@@ -13,7 +13,7 @@
 import { STATUSSEN, type BookingDto, type BookingStatus } from '../types/booking'
 import type { BlockedDateDto } from '../types/blockedDate'
 
-const OPSLAG_SLEUTEL = 'easy2move_demo_store_v1'
+const OPSLAG_SLEUTEL = 'liftup_demo_store_v1'
 // Na deze tijd wordt de demo opnieuw gezaaid, zodat "Aankomend" nooit leeg is.
 const MAX_LEEFTIJD_DAGEN = 14
 
@@ -255,7 +255,7 @@ class ConflictFout extends Error {}
 function garandeerNietGeblokkeerd(store: Store, datum: string) {
   if (store.blocked.some((d) => d.datum.slice(0, 10) === datum.slice(0, 10))) {
     throw new ConflictFout(
-      `Easy2Move is niet beschikbaar op ${ddMmJjjj(datum)}.`,
+      `LiftUp is niet beschikbaar op ${ddMmJjjj(datum)}.`,
     )
   }
 }

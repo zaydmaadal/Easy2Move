@@ -8,9 +8,7 @@ type SeoProps = {
   noIndex?: boolean
 }
 
-// Nog geen eigen domein - dit wordt bijgewerkt zodra easy2move.be
-// (of een ander definitief domein) naar deze site wijst.
-const SITE = 'https://easy2move.vercel.app'
+const SITE = 'https://ladderlift.vercel.app'
 
 // Zet per pagina een eigen title/description/canonical. Simpele
 // useEffect-aanpak (geen extra dependency zoals react-helmet nodig

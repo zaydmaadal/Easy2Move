@@ -10,7 +10,7 @@ export const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
 // browser de echte fetch; verder blijft alles hieronder identiek.
 const doFetch: typeof fetch = DEMO ? (url, init) => demoFetch(String(url), init) : (url, init) => fetch(url, init)
 
-const ADMIN_KEY_OPSLAG = 'easy2move_admin_key'
+const ADMIN_KEY_OPSLAG = 'liftup_admin_key'
 
 export class ApiError extends Error {
   status: number

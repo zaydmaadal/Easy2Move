@@ -28,11 +28,11 @@ const STAPPEN = [
 ]
 
 const TARIEVEN = [
-  { label: '1ste tot 5de verdieping', uur: 80, half: 40 },
-  { label: '6de tot 7de verdieping', uur: 90, half: 45 },
-  { label: '8ste verdieping', uur: 100, half: 50 },
-  { label: '9de verdieping', uur: 130, half: 65 },
-  { label: '10de verdieping', uur: 150, half: 75 },
+  { label: '1ste tot 5de verdieping', uur: 90, half: 45 },
+  { label: '6de tot 7de verdieping', uur: 100, half: 50 },
+  { label: '8ste verdieping', uur: 110, half: 55 },
+  { label: '9de verdieping', uur: 140, half: 70 },
+  { label: '10de verdieping', uur: 160, half: 80 },
 ]
 
 const TROEVEN = [
@@ -47,8 +47,8 @@ const TROEVEN = [
     ),
   },
   {
-    titel: 'Sinds 2007',
-    tekst: 'Bijna twintig jaar ervaring met ladderliften in Antwerpen en omstreken.',
+    titel: 'Ervaren team',
+    tekst: 'Getrainde operators die elke week ladderliften plaatsen, veilig en snel.',
     icoon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 3l2.6 5.3 5.9.8-4.3 4.1 1 5.8L12 16.3 6.8 19l1-5.8-4.3-4.1 5.9-.8L12 3z" />
@@ -57,7 +57,7 @@ const TROEVEN = [
   },
   {
     titel: 'Tot 400 kg',
-    tekst: 'Stevig platform van 2,5 op 1,5 meter, ook geschikt voor zware en grote stukken.',
+    tekst: 'Stevig platform, ook geschikt voor zware en grote stukken.',
     icoon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 8h16v12H4z" />
@@ -80,17 +80,17 @@ const PRAKTISCH = [
   {
     titel: 'Werkgebied',
     tekst:
-      'Onze tarieven gelden voor Klein-Antwerpen: Antwerpen en dertien randgemeenten. Daarbuiten rekenen we een kleine verplaatsingskost aan.',
+      'We werken in heel Vlaanderen. Binnen 20 km van ons depot geldt het basistarief, daarbuiten rekenen we een kleine verplaatsingskost aan.',
   },
   {
     titel: 'Parkeervergunning',
     tekst:
-      'Wil je de lift op de openbare weg plaatsen? Dan is schriftelijke toelating van de politie verplicht. Zonder die toelating riskeer je een boete tot €250. Wij vragen ze voor je aan vanaf €100.',
+      'Staat de lift op de openbare weg, dan heb je een toelating van de gemeente nodig. Wij kunnen die voor je aanvragen.',
   },
   {
     titel: 'Betaling',
     tekst:
-      'Cash of Bancontact, gewoon na het werk. Alle prijzen zijn inclusief btw en per adres. Op zondag geldt een toeslag van 20%.',
+      'Je betaalt na het werk, cash of met Bancontact. Alle prijzen zijn inclusief btw. Op zondag geldt een toeslag van 20%.',
   },
 ]
 
@@ -128,18 +128,13 @@ export default function Home() {
   return (
     <>
       <Seo
-        titel="Easy2Move: ladderlift verhuur en verhuisservice in Antwerpen"
-        beschrijving="Ladderlift huren in Antwerpen en omstreken. Meubels en dozen veilig langs de gevel, 24 uur per dag bereikbaar. Boek online in twee minuten."
+        titel="LiftUp: ladderlift verhuur"
+        beschrijving="Ladderlift huren in heel Vlaanderen. Meubels en dozen veilig langs de gevel, 24 uur per dag bereikbaar. Boek online in twee minuten."
         pad="/"
       />
       <section className="hero">
         <div ref={bgRef} className="hero__bg" aria-hidden="true">
           <span className="hero__blob" />
-          <span className="hero__vorm hero__vorm--twee">
-            <span className="hero__twee" data-depth="1.4">
-              2
-            </span>
-          </span>
           <span className="hero__vorm hero__vorm--dot">
             <span className="hero__dot" data-depth="3" />
           </span>
@@ -149,10 +144,9 @@ export default function Home() {
         </div>
 
         <div className="container hero__inner">
-          <p className="hero__kicker fade-item">Sinds 2007, Antwerpen en omstreken</p>
+          <p className="hero__kicker fade-item">Ladderlift verhuur in heel Vlaanderen</p>
           <h1 className="sr-only">
-            Easy2Move: ladderlift verhuur en verhuisservice in Antwerpen, 24 uur per dag
-            bereikbaar
+            LiftUp: ladderlift verhuur in heel Vlaanderen, 24 uur per dag bereikbaar
           </h1>
           <div className="fade-item fade-item--2" aria-hidden="true">
             <Logo lockup className="hero__lockup" />
@@ -239,7 +233,7 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <p className="overline">Waarom Easy2Move</p>
+            <p className="overline">Waarom LiftUp</p>
           </Reveal>
           <Reveal delay={80}>
             <h2 className="section__title">Zwaar werk, licht gemaakt</h2>
@@ -276,14 +270,6 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
-          <Reveal delay={220}>
-            <p className="info-link">
-              Volledige voorwaarden op{' '}
-              <a href="https://easy2move.be/praktische-informatie/" target="_blank" rel="noreferrer">
-                easy2move.be
-              </a>
-            </p>
-          </Reveal>
         </div>
       </section>
 
