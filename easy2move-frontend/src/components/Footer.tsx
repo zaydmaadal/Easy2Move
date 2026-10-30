@@ -40,7 +40,7 @@ export default function Footer() {
         <span>BTW {CONTACT.btw}</span>
         <span className="footer__credit">
           Website door{' '}
-          <a href="https://www.zaydmaadal.site/" target="_blank" rel="noreferrer">
+          <a href="https://zayd-maadal.site/" target="_blank" rel="noreferrer">
             Zayd Maadal
           </a>
         </span>
